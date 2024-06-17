@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Weather App</title>
+</head>
+<body>
+  <h1>Weather App</h1>
+  <div class="">
+    <hr>
+  <form action="/api/v1/weather" method="GET">
+    <label for="coord">Enter coordinates:</label>
+    <input type="text" id="lat" name="coord" placeholder="35.9126, 14.4786" required><br>
+    <button type="submit">Get Weather</button>
+  </form>
+<hr>
+
+  <form action="/api/v1/weather" method="GET">
+    <label for="city">Enter city:</label>
+    <input type="text" id="city" name="city" required>
+    <button type="submit">Get Weather</button>
+  </form>
+</div>
+<hr>
+  <div id="weather-info">
+    <% if (locals.weather) { %>
+      <div>City (Ciudad): <%- weather.city %></div>
+      <% for( let index = 0; index < weather.weather.length; index++ ) { %>
+        <div>Weather (clima): <%- weather.weather[index].main %>
+        <img src="<%- weather.weather[index].url %>" alt=""></div>
+      <% } %>
+      <div>Temperature (temperatura): <%- weather.temperature.temp %>° (<%- weather.temperature.temp_min %>° - <%- weather.temperature.temp_max %>°)</div>
+      <div>Humidity (humedad): <%- weather.temperature.humidity %>%</div>
+      <div>RealFeel (Sensación térmica): <%- weather.temperature.feels_like %>°</div>
+      <div>Wind (Viento): <%- weather.wind %>m/s</div>
+      <div>Clouds (Nubes): <%- weather.clouds %>%</div>
+      
+    <% } else if (isSearch) { %>
+     
+      <p>No hay resultados en la consulta</p>
+    <% } %>
+  </div>
+</body>
+</html>
