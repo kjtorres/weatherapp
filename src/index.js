@@ -16,6 +16,7 @@ app.listen(PORT, () => console.log(`Service running on ${PORT}`))
  * MIDDLEWARE
  */
 app.use(express.static(path.join(__dirname, 'views')))
+app.use(express.static("public"));
 app.use(cookieParser())
 
 /**

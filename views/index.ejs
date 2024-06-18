@@ -4,42 +4,73 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Weather App</title>
+  <link href="css/styles.css" rel="stylesheet" type="text/css"/>
 </head>
 <body>
-  <h1>Weather App</h1>
-  <div class="">
+  <div class="content">
+    <h1>Weather App</h1>
+    <div class="">
+      <hr>
+      <form action="/api/v1/weather" method="GET">
+        <div>
+          <label for="coord">Enter coordinates:</label>
+          <input type="text" id="lat" name="coord" placeholder="35.9126, 14.4786">
+        </div>
+        <div>
+          <label for="city">Enter city:</label>
+          <input type="text" id="city" name="city">
+        </div>
+        <div class="submit">
+          <button type="submit">Get Weather</button>
+        </div>
+      </form>
+    </div>
     <hr>
-  <form action="/api/v1/weather" method="GET">
-    <label for="coord">Enter coordinates:</label>
-    <input type="text" id="lat" name="coord" placeholder="35.9126, 14.4786" required><br>
-    <button type="submit">Get Weather</button>
-  </form>
-<hr>
-
-  <form action="/api/v1/weather" method="GET">
-    <label for="city">Enter city:</label>
-    <input type="text" id="city" name="city" required>
-    <button type="submit">Get Weather</button>
-  </form>
-</div>
-<hr>
-  <div id="weather-info">
-    <% if (locals.weather) { %>
-      <div>City (Ciudad): <%- weather.city %></div>
-      <% for( let index = 0; index < weather.weather.length; index++ ) { %>
-        <div>Weather (clima): <%- weather.weather[index].main %>
-        <img src="<%- weather.weather[index].url %>" alt=""></div>
+    <div class="weather-info">
+      <% if (locals.weather) { %>
+        
+        <div class="temp"> <%- weather.temperature.temp %>°</div>
+        <div class="city"><%- weather.city %></div>
+        <% for( let index = 0; index < weather.weather.length; index++ ) { %>
+          <div class="weather">
+            <img src="<%- weather.weather[index].url %>" alt="">
+            
+            <p><%- weather.weather[index].main %></p>
+          </div>
+        <% } %>
+        
+        <div class="temperature">
+          <div>
+            <p class="unit"><%- weather.temperature.feels_like %>°</p>
+            <p>Real Feel</p>
+          </div>
+          <div>
+            <p class="unit"><%- weather.temperature.temp_min %>°</p>
+            <p>Min temperature</p>
+          </div>
+          <div>
+            <p class="unit"><%- weather.temperature.temp_max %>°</p>
+            <p>Max temperature</p>
+          </div>
+        </div>
+        <div class="humwincloud">
+          <div>
+            <p class="unit"><%- weather.temperature.humidity %>%</p>
+            <p>Humidity</p>
+          </div>
+          <div>
+            <p class="unit"><%- weather.wind %>m/s</p>
+            <p>Wind</p>
+          </div>
+          <div>
+            <p class="unit"><%- weather.clouds %>%</p>
+            <p>Clouds</p>
+          </div>
+        </div>  
+      <% } else if (isSearch) { %>
+        <p>No hay resultados en la consulta</p>
       <% } %>
-      <div>Temperature (temperatura): <%- weather.temperature.temp %>° (<%- weather.temperature.temp_min %>° - <%- weather.temperature.temp_max %>°)</div>
-      <div>Humidity (humedad): <%- weather.temperature.humidity %>%</div>
-      <div>RealFeel (Sensación térmica): <%- weather.temperature.feels_like %>°</div>
-      <div>Wind (Viento): <%- weather.wind %>m/s</div>
-      <div>Clouds (Nubes): <%- weather.clouds %>%</div>
-      
-    <% } else if (isSearch) { %>
-     
-      <p>No hay resultados en la consulta</p>
-    <% } %>
+    </div>
   </div>
 </body>
 </html>
